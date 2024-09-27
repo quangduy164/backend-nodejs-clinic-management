@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get CRUD</title>
+</head>
+<style>
+    table,
+    td,
+    tr {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    .btn-edit {
+        outline: none;
+        border: none;
+        background: orange;
+        height: 25px;
+        width: 60px;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    .btn-delete {
+        outline: none;
+        border: none;
+        background: rgb(185, 48, 48);
+        height: 25px;
+        width: 60px;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <table style="width: 100%;">
+        <tr>
+            <td>Email</td>
+            <td>First name</td>
+            <td>Last name</td>
+            <td>Address</td>
+            <td>Actions</td>
+        </tr>
+        <% dataTable.forEach(function(user, index) { %>
+            <tr>
+                <td>
+                    <%= user.email %>
+                </td>
+                <td>
+                    <%= user.firstName %>
+                </td>
+                <td>
+                    <%= user.lastName %>
+                </td>
+                <td>
+                    <%= user.address %>
+                </td>
+                <td>
+                    <a href="/edit-crud?id=<%= user.id %>" class="btn-edit" type="button">Edit</a>
+                    <a class="btn-delete" type="button">Delete</a>
+                </td>
+            </tr>
+            <% }); %>
+    </table>
+</body>
+
+</html>
