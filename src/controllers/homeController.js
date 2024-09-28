@@ -23,7 +23,6 @@ const postCRUD = async (req, res) => {
     try {
         let message = await ServicesCRUD.createUser(req.body)
         console.log(message)
-        console.log(req.body)
         res.send('post crud')
     } catch (e) {
         console.log(e)
@@ -40,7 +39,6 @@ const displayGetCRUD = async (req, res) => {
 }
 
 const getEditCRUD = async (req, res) => {
-
     let userId = req.query.id // id của email tương ứng
     if (userId) {
         let userData = await ServicesCRUD.getUserInfoById(userId)
@@ -60,11 +58,22 @@ const putCRUD = async (req, res) => {
     }
 }
 
+const deleteCRUD = async (req, res) => {
+    let userId = req.query.id // id của email tương ứng
+    if (userId) {
+        let allUsers = await ServicesCRUD.deleteUserById(userId)
+        res.render('displayCRUD.ejs', { dataTable: allUsers })
+    } else {
+        res.send('User not found!')
+    }
+}
+
 module.exports = {
     getHomePage,
     getCRUD,
     postCRUD,
     displayGetCRUD,
     getEditCRUD,
-    putCRUD
+    putCRUD,
+    deleteCRUD
 }

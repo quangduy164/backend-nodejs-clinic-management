@@ -5,8 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get CRUD</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <style>
+    .topnav {
+        margin-bottom: 5px;
+    }
+
     table,
     td,
     tr {
@@ -36,6 +41,11 @@
 </style>
 
 <body>
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/crud">Create User</a>
+        <a class="active" href="/get-crud">List User</a>
+    </div>
     <table style="width: 100%;">
         <tr>
             <td>Email</td>
@@ -60,7 +70,7 @@
                 </td>
                 <td>
                     <a href="/edit-crud?id=<%= user.id %>" class="btn-edit" type="button">Edit</a>
-                    <a class="btn-delete" type="button">Delete</a>
+                    <a href="/delete-crud?id=<%= user.id %>" class="btn-delete" type="button">Delete</a>
                 </td>
             </tr>
             <% }); %>

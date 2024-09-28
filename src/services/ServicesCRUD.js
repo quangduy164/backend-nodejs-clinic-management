@@ -1,8 +1,5 @@
-const { where } = require('sequelize');
 const db = require('../models/index')
 const bcrypt = require('bcryptjs');
-const { raw } = require('body-parser');
-const e = require('express');
 const salt = bcrypt.genSaltSync(10);//hash password theo library có sẵn
 
 const createUser = async (data) => {
@@ -94,9 +91,31 @@ const updateUserData = async (data) => {
     })
 }
 
+const deleteUserById = async (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            //findOne = select * from Users where id = ?
+            let user = await db.User.findOne({
+                where: { id: userId },
+            })
+            if (user) {
+                //destroy = DELETE FROM Users WHERE id=?
+                await user.destroy()
+                let allUsers = await db.User.findAll()
+                resolve(allUsers)
+            } else {
+                resolve()
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     createUser,
     getAllUser,
     getUserInfoById,
-    updateUserData
+    updateUserData,
+    deleteUserById
 }
