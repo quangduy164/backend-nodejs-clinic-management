@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')//lấy param ở url khi gọi api
 const configViewEngine = require('./config/configViewEngine')
 const connectDB = require('./config/connectDB')
 const webRoutes = require('./routes/web')
+const apiRoutes = require('./routes/api')
 
 const app = express()//tạo app express
 const port = process.env.PORT || 8888//init port
@@ -18,6 +19,9 @@ configViewEngine(app)
 
 //Khai báo routes
 app.use('/', webRoutes)
+
+//Khai báo routes api
+app.use('/api/', apiRoutes)
 
 connectDB()
 
