@@ -19,7 +19,7 @@ const verifyToken = (req, res, next) => {
             });
         }
         // Nếu token hợp lệ, lưu thông tin người dùng đã giải mã vào request
-        req.userId = decoded.id;
+        req.email = decoded.email;
         req.userRole = decoded.roleId;
         next();
     });
