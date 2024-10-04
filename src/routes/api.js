@@ -1,5 +1,5 @@
 const express = require('express')
-const { handleLogin } = require('../controllers/userController')
+const { handleLogin, handleGetAllUsers, handleCreateNewUser, handleEditUser, handleDeleteUser } = require('../controllers/userController')
 const verifyToken = require('../middleware/verifyToken');
 const path = require('path')
 const router = express.Router()
@@ -13,5 +13,10 @@ router.get('/user/profile', verifyToken, (req, res) => {
         roleId: req.userRole
     });
 });
+
+router.get('/get-all-users', handleGetAllUsers)
+router.post('/create-new-user', handleCreateNewUser)
+router.put('/edit-user', handleEditUser)
+router.delete('/delete-user', handleDeleteUser)
 
 module.exports = router//export default

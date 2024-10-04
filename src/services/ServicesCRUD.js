@@ -1,5 +1,7 @@
+const { where } = require('sequelize');
 const db = require('../models/index')
 const bcrypt = require('bcryptjs');
+const raw = require('body-parser/lib/types/raw');
 const salt = bcrypt.genSaltSync(10);//hash password theo library có sẵn
 
 const createUser = async (data) => {
@@ -72,7 +74,8 @@ const updateUserData = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let user = await db.User.findOne({
-                where: { id: data.id }
+                where: { id: data.id },
+                raw: false
             })
             if (user) {
                 //update = UPDATE Users SET email = ?, name = ?, city = ? WHERE id = ?
@@ -100,7 +103,9 @@ const deleteUserById = async (userId) => {
             })
             if (user) {
                 //destroy = DELETE FROM Users WHERE id=?
-                await user.destroy()
+                await db.User.destroy({
+                    where: { id: userId }
+                })
                 let allUsers = await db.User.findAll()
                 resolve(allUsers)
             } else {
