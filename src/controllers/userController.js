@@ -72,18 +72,14 @@ const handleGetAllUsers = async (req, res) => {
 
 const handleCreateNewUser = async (req, res) => {
     let message = await ServicesUser.createNewUser(req.body)
-    return res.status(200).json({
-        message
-    })
+    return res.status(200).json(message)
 }
 
 const handleEditUser = async (req, res) => {
     try {
         let data = req.body
         let message = await ServicesUser.updateUserData(data)
-        return res.status(200).json({
-            message
-        })
+        return res.status(200).json(message)
     } catch (e) {
         console.log(e)
     }

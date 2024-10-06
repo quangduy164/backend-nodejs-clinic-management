@@ -96,25 +96,26 @@ const createNewUser = (data) => {
             if (check == true) {
                 return resolve({
                     errCode: 1,
-                    message: 'Your email is already in use'
+                    errMessage: 'Your email is already in use'
+                })
+            } else {
+                let hashPasswordFromBcryptjs = await hashUserPassword(data.password)
+                //method create = query của mysql INSERT INTO Users(email, name, city,...) VALUES(?, ?, ?, ...)
+                await db.User.create({
+                    email: data.email,
+                    password: hashPasswordFromBcryptjs,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    address: data.address,
+                    phoneNumber: data.phoneNumber,
+                    gender: data.gender == '1' ? true : false,
+                    roleId: data.roleId,
+                })
+                resolve({
+                    errCode: 0,
+                    message: 'create user success'
                 })
             }
-            let hashPasswordFromBcryptjs = await hashUserPassword(data.password)
-            //method create = query của mysql INSERT INTO Users(email, name, city,...) VALUES(?, ?, ?, ...)
-            await db.User.create({
-                email: data.email,
-                password: hashPasswordFromBcryptjs,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                address: data.address,
-                phoneNumber: data.phoneNumber,
-                gender: data.gender == '1' ? true : false,
-                roleId: data.roleId,
-            })
-            resolve({
-                errCode: 0,
-                message: 'ok'
-            })
         } catch (error) {
             reject(error)
         }
@@ -151,7 +152,6 @@ const updateUserData = (data) => {
                 user.lastName = data.lastName
                 user.address = data.address
                 await user.save()
-                let allUsers = await db.User.findAll()
                 resolve({
                     errCode: 0,
                     message: 'update user success'
@@ -185,7 +185,7 @@ const deleteUser = (userId) => {
             })
             resolve({
                 errCode: 0,
-                errMessage: 'The user delete success'
+                message: 'The user delete success'
             })
         } catch (error) {
             reject(error)
