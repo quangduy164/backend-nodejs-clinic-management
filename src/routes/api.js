@@ -10,7 +10,8 @@ router.get('/user/profile', verifyToken, (req, res) => {
     res.status(200).json({
         message: 'Access granted',
         email: req.email,
-        roleId: req.userRole
+        roleId: req.userRole,
+        firstName: req.firstName
     });
 });
 

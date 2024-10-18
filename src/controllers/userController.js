@@ -25,7 +25,8 @@ const handleLogin = async (req, res) => {
             const accessToken = jwt.sign({
                 id: userData.user.id,
                 email: userData.user.email,
-                roleId: userData.user.roleId
+                roleId: userData.user.roleId,
+                firstName: userData.user.firstName
             },
                 process.env.JWT_SECRET,//Khóa cho jwt
                 { expiresIn: '1h' }//token sống trong 1h

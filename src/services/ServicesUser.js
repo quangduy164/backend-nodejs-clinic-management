@@ -14,7 +14,7 @@ const handleUserLogin = async (email, password) => {
                 //compare password
                 let user = await db.User.findOne({
                     where: { email: email },
-                    attributes: ['email', 'roleId', 'password'],// Lấy thêm thuộc tính role 
+                    attributes: ['email', 'roleId', 'password', 'firstName'],// Lấy thêm thuộc tính role, firstName 
                     raw: true// Đảm bảo trả về dữ liệu object
                 })
                 if (user) {
