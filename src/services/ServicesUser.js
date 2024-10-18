@@ -151,6 +151,7 @@ const updateUserData = (data) => {
                 user.firstName = data.firstName
                 user.lastName = data.lastName
                 user.address = data.address
+                user.roleId = data.roleId
                 await user.save()
                 resolve({
                     errCode: 0,
