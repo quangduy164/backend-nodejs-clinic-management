@@ -22,5 +22,6 @@ router.delete('/delete-user', userController.handleDeleteUser)
 
 router.get('/allcode', userController.getAllCode)
 router.put('/update-user-image', userController.handleUpdateUserImage)
+router.get('/get-user', userController.handleGetUser)
 
 module.exports = router//export default

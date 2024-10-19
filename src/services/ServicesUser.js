@@ -250,6 +250,25 @@ const updateUserImage = (data) => {
     })
 }
 
+const getUser = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = ''
+            if (userId) {
+                user = await db.User.findOne({
+                    where: { id: userId },
+                    attributes: {
+                        exclude: ['password']
+                    }
+                })
+            }
+            resolve(user)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin,
     getAllUsers,
@@ -257,5 +276,6 @@ module.exports = {
     updateUserData,
     deleteUser,
     getAllCodeService,
-    updateUserImage
+    updateUserImage,
+    getUser
 }

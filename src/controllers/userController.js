@@ -120,6 +120,23 @@ const handleUpdateUserImage = async (req, res) => {
     }
 }
 
+const handleGetUser = async (req, res) => {
+    let id = req.query.id;//lấy ALL hoặc 1 id
+    if (!id) {
+        return res.status(200).json({
+            errCode: 1,
+            message: 'Missing require parameters',
+            user: []
+        })
+    }
+    let user = await ServicesUser.getUser(id)
+    return res.status(200).json({
+        errCode: 0,
+        message: 'ok',
+        user
+    })
+}
+
 module.exports = {
     handleLogin,
     handleGetAllUsers,
@@ -127,5 +144,6 @@ module.exports = {
     handleEditUser,
     handleDeleteUser,
     getAllCode,
-    handleUpdateUserImage
+    handleUpdateUserImage,
+    handleGetUser
 }
