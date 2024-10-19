@@ -9,7 +9,7 @@ router.get('/user/profile', verifyToken, (req, res) => {
     // Sau khi verifyToken thành công có thể truy cập thông tin người dùng từ req.userId
     res.status(200).json({
         message: 'Access granted',
-        email: req.email,
+        id: req.id,
         roleId: req.userRole,
         firstName: req.firstName
     });

@@ -14,7 +14,7 @@ const handleUserLogin = async (email, password) => {
                 //compare password
                 let user = await db.User.findOne({
                     where: { email: email },
-                    attributes: ['email', 'roleId', 'password', 'firstName'],// Lấy thêm thuộc tính role, firstName 
+                    attributes: ['id', 'email', 'roleId', 'password', 'firstName'],// Lấy thêm thuộc tính role, firstName, id 
                     raw: true// Đảm bảo trả về dữ liệu object
                 })
                 if (user) {
@@ -220,14 +220,14 @@ const getAllCodeService = (typeInput) => {
 const updateUserImage = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.email) {
+            if (!data.id) {
                 return resolve({
                     errCode: 2,
                     errMessage: 'Missing required parameters'
                 })
             }
             let user = await db.User.findOne({
-                where: { email: data.email },
+                where: { id: data.id },
                 raw: false
             })
             if (user) {
