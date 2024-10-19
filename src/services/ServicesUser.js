@@ -217,11 +217,45 @@ const getAllCodeService = (typeInput) => {
     })
 }
 
+const updateUserImage = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.email) {
+                return resolve({
+                    errCode: 2,
+                    errMessage: 'Missing required parameters'
+                })
+            }
+            let user = await db.User.findOne({
+                where: { email: data.email },
+                raw: false
+            })
+            if (user) {
+                //update = UPDATE Users SET email = ?, name = ?, city = ? WHERE id = ?
+                user.image = Buffer.from(data.image, 'base64'); // Chuyển Base64 thành Buffer để lưu vào BLOB
+                await user.save()
+                resolve({
+                    errCode: 0,
+                    message: 'update user image success'
+                })
+            } else {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'user not found'
+                })
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin,
     getAllUsers,
     createNewUser,
     updateUserData,
     deleteUser,
-    getAllCodeService
+    getAllCodeService,
+    updateUserImage
 }

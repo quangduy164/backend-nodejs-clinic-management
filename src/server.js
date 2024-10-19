@@ -11,8 +11,10 @@ const port = process.env.PORT || 8888//init port
 const hostname = process.env.HOSTNAME
 
 //config req.body
-app.use(express.json()) // for json
-app.use(express.urlencoded({ extended: true })) // for form data
+// app.use(express.json()) // for json
+// app.use(express.urlencoded({ extended: true })) // for form data
+app.use(bodyParser.json({ limit: '50mb' })) // for json
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })) // for form data
 
 //config template engine
 configViewEngine(app)

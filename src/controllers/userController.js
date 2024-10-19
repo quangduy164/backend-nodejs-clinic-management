@@ -110,11 +110,22 @@ const getAllCode = async (req, res) => {
     }
 }
 
+const handleUpdateUserImage = async (req, res) => {
+    try {
+        let data = req.body
+        let message = await ServicesUser.updateUserImage(data)
+        return res.status(200).json(message)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 module.exports = {
     handleLogin,
     handleGetAllUsers,
     handleCreateNewUser,
     handleEditUser,
     handleDeleteUser,
-    getAllCode
+    getAllCode,
+    handleUpdateUserImage
 }
