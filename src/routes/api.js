@@ -1,5 +1,6 @@
 const express = require('express')
 const userController = require('../controllers/userController')
+const doctorController = require('../controllers/doctorController')
 const verifyToken = require('../middleware/verifyToken');
 const path = require('path')
 const router = express.Router()
@@ -23,5 +24,7 @@ router.delete('/delete-user', userController.handleDeleteUser)
 router.get('/allcode', userController.getAllCode)
 router.put('/update-user-image', userController.handleUpdateUserImage)
 router.get('/get-user', userController.handleGetUser)
+
+router.get('/top-doctor-home', doctorController.getTopDoctorHome)
 
 module.exports = router//export default

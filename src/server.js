@@ -13,8 +13,8 @@ const hostname = process.env.HOSTNAME
 //config req.body
 // app.use(express.json()) // for json
 // app.use(express.urlencoded({ extended: true })) // for form data
-app.use(bodyParser.json({ limit: '50mb' })) // for json
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })) // for form data
+app.use(bodyParser.json({ limit: '50mb' })) //tăng dung lượng upload file
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })) // tăng dung lượng upload file
 
 //config template engine
 configViewEngine(app)
