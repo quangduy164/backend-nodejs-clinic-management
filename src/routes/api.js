@@ -27,5 +27,6 @@ router.get('/get-user', userController.handleGetUser)
 
 router.get('/top-doctor-home', doctorController.getTopDoctorHome)
 router.get('/get-all-doctors', doctorController.getAllDoctors)
+router.post('/save-infor-doctor', doctorController.postInforDoctor)
 
 module.exports = router//export default

@@ -46,7 +46,33 @@ const getAllDoctors = () => {
     })
 }
 
+const saveDetailInforDoctor = (inputData) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputData.doctorId || !inputData.content) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameters'
+                })
+            } else {
+                await db.Markdown.create({
+                    content: inputData.content,
+                    description: inputData.description,
+                    doctorId: inputData.doctorId
+                })
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Save infor doctor success'
+                })
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome,
-    getAllDoctors
+    getAllDoctors,
+    saveDetailInforDoctor
 }
