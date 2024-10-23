@@ -26,5 +26,6 @@ router.put('/update-user-image', userController.handleUpdateUserImage)
 router.get('/get-user', userController.handleGetUser)
 
 router.get('/top-doctor-home', doctorController.getTopDoctorHome)
+router.get('/get-all-doctors', doctorController.getAllDoctors)
 
 module.exports = router//export default

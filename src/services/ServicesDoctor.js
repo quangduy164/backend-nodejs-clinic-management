@@ -6,7 +6,7 @@ const getTopDoctorHome = (limitInput) => {
             let users = await db.User.findAll({
                 limit: limitInput,
                 where: { roleId: 'R2' },
-                order: [['createdAt', 'DESC']],//sắp xếp theo ngày tạo
+                order: [['createdAt', 'ASC']],//sắp xếp theo ngày tạo tăng dần
                 attributes: {
                     exclude: ['password']
                 },
@@ -27,6 +27,26 @@ const getTopDoctorHome = (limitInput) => {
     })
 }
 
+const getAllDoctors = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let doctors = await db.User.findAll({
+                where: { roleId: 'R2' },
+                attributes: {
+                    exclude: ['password', 'image']
+                },
+            })
+            resolve({
+                errCode: 0,
+                data: doctors
+            })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
-    getTopDoctorHome
+    getTopDoctorHome,
+    getAllDoctors
 }
