@@ -28,5 +28,6 @@ router.get('/get-user', userController.handleGetUser)
 router.get('/top-doctor-home', doctorController.getTopDoctorHome)
 router.get('/get-all-doctors', doctorController.getAllDoctors)
 router.post('/save-infor-doctor', doctorController.postInforDoctor)
+router.get('/get-detail-doctor-by-id', doctorController.getDetailDoctorById)
 
 module.exports = router//export default
