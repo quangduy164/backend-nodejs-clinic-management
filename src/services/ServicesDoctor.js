@@ -49,17 +49,31 @@ const getAllDoctors = () => {
 const saveDetailInforDoctor = (inputData) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!inputData.doctorId || !inputData.content) {
+            if (!inputData.doctorId || !inputData.content || !inputData.action) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing parameters'
                 })
             } else {
-                await db.Markdown.create({
-                    content: inputData.content,
-                    description: inputData.description,
-                    doctorId: inputData.doctorId
-                })
+                if (inputData.action == 'CREATE') {
+                    await db.Markdown.create({
+                        content: inputData.content,
+                        description: inputData.description,
+                        doctorId: inputData.doctorId
+                    })
+                } else if (inputData.action == 'UPDATE') {
+                    let doctorMarkdown = await db.Markdown.findOne({
+                        where: { doctorId: inputData.doctorId },
+                        raw: false
+                    })
+                    if (doctorMarkdown) {
+                        doctorMarkdown.content = inputData.content;
+                        doctorMarkdown.description = inputData.description;
+
+                        await doctorMarkdown.save()
+                    }
+                }
+
                 resolve({
                     errCode: 0,
                     errMessage: 'Save infor doctor success'
