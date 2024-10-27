@@ -1,3 +1,4 @@
+const { where } = require('sequelize')
 const db = require('../models/index')
 const lodash = require('lodash')
 
@@ -132,7 +133,6 @@ const bulkCreateSchedule = (data) => {
                 if (data && data.length > 0) {
                     data = data.map(item => ({//duyệt các phần tử của data và thêm trường maxNumber = 10 vào object
                         ...item,
-                        date: new Date(item.date).getTime(), // Chuyển thành Date object
                         maxNumber: MAX_NUMBER_SCHEDULE,
                     }));
                 }
@@ -141,13 +141,6 @@ const bulkCreateSchedule = (data) => {
                     where: { doctorId: data[0]['doctorId'], date: data[0]['date'] },
                     attributes: ['timeType', 'date', 'doctorId', 'maxNumber']
                 })
-                //convert date
-                if (existing && existing.length > 0) {
-                    existing = existing.map(item => ({
-                        ...item,
-                        date: new Date(item.date).getTime(), // Chuyển thành Date object
-                    }));
-                }
                 //compare different
                 let toCreate = lodash.differenceWith(data, existing, (a, b) => {
                     return a.timeType == b.timeType && a.date == b.date
@@ -168,10 +161,38 @@ const bulkCreateSchedule = (data) => {
     })
 }
 
+const getScheduleByDate = (doctorId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId || !date) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameters'
+                })
+            } else {
+                let dataSchedule = await db.Schedule.findAll({
+                    where: { doctorId: doctorId, date: date }
+                })
+
+                if (!dataSchedule) {
+                    dataSchedule = []
+                }
+                resolve({
+                    errCode: 0,
+                    data: dataSchedule
+                })
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome,
     getAllDoctors,
     saveDetailInforDoctor,
     getDetailDoctorById,
-    bulkCreateSchedule
+    bulkCreateSchedule,
+    getScheduleByDate
 }
