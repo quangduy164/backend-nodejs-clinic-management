@@ -1,6 +1,7 @@
 const express = require('express')
 const userController = require('../controllers/userController')
 const doctorController = require('../controllers/doctorController')
+const patientController = require('../controllers/patientController')
 const verifyToken = require('../middleware/verifyToken');
 const path = require('path')
 const router = express.Router()
@@ -33,5 +34,7 @@ router.post('/bulk-create-schedule', doctorController.bulkCreateSchedule)
 router.get('/get-schedule-doctor-by-date', doctorController.getScheduleByDate)
 router.get('/get-extra-infor-doctor-by-id', doctorController.getExtraInforDoctorById)
 router.get('/get-profile-doctor-by-id', doctorController.getProfileDoctorById)
+
+router.post('/patient-book-appointment', patientController.postBookAppointment)
 
 module.exports = router//export default
