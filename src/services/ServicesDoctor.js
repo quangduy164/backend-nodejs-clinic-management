@@ -214,6 +214,7 @@ const getScheduleByDate = (doctorId, date) => {
                     where: { doctorId: doctorId, date: date },
                     include: [//lấy thêm ở allcode 
                         { model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVi'] },
+                        { model: db.User, as: 'doctorData', attributes: ['firstName', 'lastName'] },
                     ],
                     raw: true,
                     nest: true

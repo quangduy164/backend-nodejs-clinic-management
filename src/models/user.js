@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.Allcode, { foreignKey: 'gender', targetKey: 'keyMap', as: 'genderData' })
       User.hasOne(models.Markdown, { foreignKey: 'doctorId' })//1 user map với 1 markdown
       User.hasOne(models.Doctor_Infor, { foreignKey: 'doctorId' })//1 user map với 1 doctor_infor
+
+      User.hasMany(models.Schedule, { foreignKey: 'doctorid', as: 'doctorData' })//1 user có nhiều schedule
     }
   }
   User.init({

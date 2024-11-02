@@ -19,7 +19,7 @@ let sendSimpleEmail = async (dataSend) => {
         subject: "Thông tin đặt lịch khám bệnh", // Subject line
         html: `
         <h3>Xin chào ${dataSend.patientName}!</h3>
-        <p>Bạn nhận được email này vì đã đặt lịch khám online trên app của dui </p>
+        <p>Bạn nhận được email này vì đã đặt lịch khám online trên app của duii </p>
         <p>Thông tin đặt lịch khám:</p>
         <div><b>Thời gian: ${dataSend.time}</b></div>
         <div><b>Bác sĩ: ${dataSend.doctorName}</b></div>
@@ -30,7 +30,6 @@ let sendSimpleEmail = async (dataSend) => {
         <div>Trân trọng.</div>
         `, // html body
     });
-
 }
 
 module.exports = {

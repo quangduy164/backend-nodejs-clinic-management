@@ -5,8 +5,10 @@ const ServicesEmail = require('../services/ServicesEmail')
 const postBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.email || !data.doctorId || !data.date || !data.timeType || !data.schedule
-                || !data.name || !data.address || !data.gender || !data.phoneNumber
+            if (!data.email || !data.doctorId || !data.doctorName
+                || !data.date || !data.timeType || !data.schedule
+                || !data.name || !data.address || !data.gender
+                || !data.phoneNumber
             ) {
                 resolve({
                     errCode: 1,
@@ -17,8 +19,8 @@ const postBookAppointment = (data) => {
                 await ServicesEmail.sendSimpleEmail({
                     receiverEmail: data.email,
                     patientName: data.name,
-                    time: `${data.schedule, data.date}`,
-                    doctorName: 'duii',
+                    time: `${data.schedule}, ${data.date}`,
+                    doctorName: data.doctorName,
                     redirectLink: 'https://www.youtube.com/'
                 })
 
