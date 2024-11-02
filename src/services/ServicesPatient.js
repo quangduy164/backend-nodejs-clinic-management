@@ -1,17 +1,28 @@
 const { where } = require('sequelize')
 const db = require('../models/index')
+const ServicesEmail = require('../services/ServicesEmail')
 
 const postBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.email || !data.doctorId || !data.date || !data.timeType
+            if (!data.email || !data.doctorId || !data.date || !data.timeType || !data.schedule
                 || !data.name || !data.address || !data.gender || !data.phoneNumber
             ) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing required parameters'
                 })
-            } else { //update and insert patient
+            } else {
+                //send email
+                await ServicesEmail.sendSimpleEmail({
+                    receiverEmail: data.email,
+                    patientName: data.name,
+                    time: `${data.schedule, data.date}`,
+                    doctorName: 'duii',
+                    redirectLink: 'https://www.youtube.com/'
+                })
+
+                //update and insert patient
                 let user = await db.User.findOrCreate({
                     where: { email: data.email },//nếu không tìm thấy thì vào default
                     defaults: {
