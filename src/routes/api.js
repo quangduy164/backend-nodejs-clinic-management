@@ -36,5 +36,6 @@ router.get('/get-extra-infor-doctor-by-id', doctorController.getExtraInforDoctor
 router.get('/get-profile-doctor-by-id', doctorController.getProfileDoctorById)
 
 router.post('/patient-book-appointment', patientController.postBookAppointment)
+router.post('/verify-book-appointment', patientController.postVerifyAppointment)
 
 module.exports = router//export default
