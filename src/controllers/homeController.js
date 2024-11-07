@@ -68,6 +68,18 @@ const deleteCRUD = async (req, res) => {
     }
 }
 
+const verifyBooking = async (req, res) => {
+    let { token, doctorId } = req.query
+    try {
+        // Gọi API xác minh với `token` và `doctorId`
+        let message = await ServicesCRUD.verifyBooking({ token, doctorId });
+        // Render verifyEmail.ejs với thông điệp
+        res.render('verifyEmail.ejs', { message: message });
+    } catch (error) {
+        res.render('verifyEmail.ejs', { message: 'An error occurred. Please try again later.' });
+    }
+}
+
 module.exports = {
     getHomePage,
     getCRUD,
@@ -75,5 +87,6 @@ module.exports = {
     displayGetCRUD,
     getEditCRUD,
     putCRUD,
-    deleteCRUD
+    deleteCRUD,
+    verifyBooking
 }

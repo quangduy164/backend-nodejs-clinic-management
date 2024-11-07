@@ -1,14 +1,16 @@
 const express = require('express')
-const { getHomePage, getCRUD, postCRUD, displayGetCRUD, getEditCRUD, putCRUD, deleteCRUD } = require('../controllers/homeController')
+const homeController = require('../controllers/homeController')
 const path = require('path')
 const router = express.Router()
 
-router.get('/', getHomePage/**controller */)
-router.get('/crud', getCRUD)
-router.post('/post-crud', postCRUD)
-router.get('/get-crud', displayGetCRUD)
-router.get('/edit-crud', getEditCRUD)
-router.post('/put-crud', putCRUD)
-router.get('/delete-crud', deleteCRUD)
+router.get('/', homeController.getHomePage/**controller */)
+router.get('/crud', homeController.getCRUD)
+router.post('/post-crud', homeController.postCRUD)
+router.get('/get-crud', homeController.displayGetCRUD)
+router.get('/edit-crud', homeController.getEditCRUD)
+router.post('/put-crud', homeController.putCRUD)
+router.get('/delete-crud', homeController.deleteCRUD)
+
+router.get('/verify-booking', homeController.verifyBooking)
 
 module.exports = router//export default

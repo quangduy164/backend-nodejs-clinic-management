@@ -117,10 +117,45 @@ const deleteUserById = async (userId) => {
     })
 }
 
+const verifyBooking = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.token || !data.doctorId) {
+                resolve({
+                    message: 'Missing required parameters'
+                })
+            } else {
+                let appointment = await db.Booking.findOne({
+                    where: {
+                        doctorId: data.doctorId,
+                        token: data.token,
+                        statusId: 'S1'
+                    },
+                    raw: false
+                })
+                if (appointment) {
+                    appointment.statusId = 'S2'
+                    await appointment.save()
+                    resolve({
+                        message: 'Xác nhận lịch hẹn thành công!'
+                    })
+                } else {
+                    resolve({
+                        message: 'Lịch hẹn không tồn tại hoặc đã được xác nhận!'
+                    })
+                }
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     createUser,
     getAllUser,
     getUserInfoById,
     updateUserData,
-    deleteUserById
+    deleteUserById,
+    verifyBooking
 }

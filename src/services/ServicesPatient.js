@@ -51,7 +51,7 @@ const postBookAppointment = (data) => {
                 //create bookings record
                 if (user && user[0]) {
                     await db.Booking.findOrCreate({
-                        where: { timeType: data.timeType },//1 thời điểm chỉ được tạo 1 lịch khám
+                        where: { timeType: data.timeType, date: data.date, doctorId: data.doctorId },//1 thời điểm chỉ được tạo 1 lịch khám
                         defaults: {
                             statusId: 'S1',
                             doctorId: data.doctorId,
