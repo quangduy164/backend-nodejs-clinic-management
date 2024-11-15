@@ -12,7 +12,7 @@ const createSpecialty = (data) => {
             } else {
                 await db.Specialty.create({
                     name: data.name,
-                    image: data.image,
+                    image: Buffer.from(data.image, 'base64'), // Chuyển Base64 thành Buffer để lưu vào BLOB,
                     description: data.description
                 })
                 resolve({
@@ -26,6 +26,21 @@ const createSpecialty = (data) => {
     })
 }
 
+const getAllSpecialties = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await db.Specialty.findAll();
+            resolve({
+                errCode: 0,
+                data: data
+            })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
-    createSpecialty
+    createSpecialty,
+    getAllSpecialties
 }
