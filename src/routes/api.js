@@ -2,6 +2,7 @@ const express = require('express')
 const userController = require('../controllers/userController')
 const doctorController = require('../controllers/doctorController')
 const patientController = require('../controllers/patientController')
+const specialtyController = require('../controllers/specialtyController')
 const verifyToken = require('../middleware/verifyToken');
 const path = require('path')
 const router = express.Router()
@@ -37,5 +38,7 @@ router.get('/get-profile-doctor-by-id', doctorController.getProfileDoctorById)
 
 router.post('/patient-book-appointment', patientController.postBookAppointment)
 router.post('/verify-book-appointment', patientController.postVerifyAppointment)
+
+router.post('/create-new-specialty', specialtyController.createSpecialty)
 
 module.exports = router//export default
