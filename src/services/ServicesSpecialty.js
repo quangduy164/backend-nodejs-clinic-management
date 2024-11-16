@@ -29,6 +29,24 @@ const createSpecialty = (data) => {
 const getAllSpecialties = () => {
     return new Promise(async (resolve, reject) => {
         try {
+            let data = await db.Specialty.findAll({
+                attributes: {
+                    exclude: ['image', 'description']
+                },
+            });
+            resolve({
+                errCode: 0,
+                data: data
+            })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const getAllDetailSpecialties = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
             let data = await db.Specialty.findAll();
             resolve({
                 errCode: 0,
@@ -42,5 +60,6 @@ const getAllSpecialties = () => {
 
 module.exports = {
     createSpecialty,
-    getAllSpecialties
+    getAllSpecialties,
+    getAllDetailSpecialties
 }
