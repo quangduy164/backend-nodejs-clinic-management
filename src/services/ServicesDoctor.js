@@ -56,6 +56,7 @@ const saveDetailInforDoctor = (inputData) => {
             if (!inputData.doctorId || !inputData.content
                 || !inputData.action || !inputData.selectedPrice
                 || !inputData.selectedPayment || !inputData.selectedProvince
+                || !inputData.selectedSpecialty
                 || !inputData.nameClinic || !inputData.addressClinic
             ) {
                 resolve({
@@ -93,6 +94,7 @@ const saveDetailInforDoctor = (inputData) => {
                     doctorInfor.priceId = inputData.selectedPrice;
                     doctorInfor.paymentId = inputData.selectedPayment;
                     doctorInfor.provinceId = inputData.selectedProvince;
+                    doctorInfor.specialtyId = inputData.selectedSpecialty;
                     doctorInfor.nameClinic = inputData.nameClinic;
                     doctorInfor.addressClinic = inputData.addressClinic;
                     doctorInfor.note = inputData.note
@@ -104,6 +106,7 @@ const saveDetailInforDoctor = (inputData) => {
                         priceId: inputData.selectedPrice,
                         paymentId: inputData.selectedPayment,
                         provinceId: inputData.selectedProvince,
+                        specialtyId: inputData.selectedSpecialty,
                         nameClinic: inputData.nameClinic,
                         addressClinic: inputData.addressClinic,
                         note: inputData.note
@@ -144,6 +147,7 @@ const getDetailDoctorById = (inputId) => {
                                 { model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi'] },
                                 { model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi'] },
                                 { model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Specialty, as: 'specialtyTypeData', attributes: ['name'] },
                             ]
                         },
                     ],
