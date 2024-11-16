@@ -36,6 +36,7 @@ const getAllSpecialties = () => {
             });
             resolve({
                 errCode: 0,
+                errMessage: 'ok',
                 data: data
             })
         } catch (error) {
@@ -50,8 +51,52 @@ const getAllDetailSpecialties = () => {
             let data = await db.Specialty.findAll();
             resolve({
                 errCode: 0,
+                errMessage: 'ok',
                 data: data
             })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const getDetailSpecialtyById = (inputId, location) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId || !location) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameters'
+                })
+            } else {
+                let data = {}
+                data = await db.Specialty.findOne({
+                    where: { id: inputId },
+                    attributes: ['name', 'description'],
+                })
+                if (data) {
+                    //lấy danh sách id doctor theo chuyên khoa
+                    let doctorSpecialty = []
+                    if (location === 'ALL') {//tìm toàn quốc
+                        doctorSpecialty = await db.Doctor_Infor.findAll({
+                            where: { specialtyId: inputId },
+                            attributes: ['doctorId', 'provinceId'],
+                        })
+                    } else {//tìm theo khu vực
+                        doctorSpecialty = await db.Doctor_Infor.findAll({
+                            where: { specialtyId: inputId, provinceId: location },
+                            attributes: ['doctorId', 'provinceId'],
+                        })
+                    }
+
+                    data.doctorSpecialty = doctorSpecialty
+                }
+                resolve({
+                    errCode: 0,
+                    errMessage: 'ok',
+                    data: data
+                })
+            }
         } catch (error) {
             reject(error)
         }
@@ -61,5 +106,6 @@ const getAllDetailSpecialties = () => {
 module.exports = {
     createSpecialty,
     getAllSpecialties,
-    getAllDetailSpecialties
+    getAllDetailSpecialties,
+    getDetailSpecialtyById
 }

@@ -42,5 +42,6 @@ router.post('/verify-book-appointment', patientController.postVerifyAppointment)
 router.post('/create-new-specialty', specialtyController.createSpecialty)
 router.get('/get-all-specialties', specialtyController.getAllSpecialties)
 router.get('/get-all-detail-specialties', specialtyController.getAllDetailSpecialties)
+router.get('/get-detail-specialty-by-id', specialtyController.getDetailSpecialtyById)
 
 module.exports = router//export default
