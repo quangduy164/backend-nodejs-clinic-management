@@ -3,6 +3,7 @@ const userController = require('../controllers/userController')
 const doctorController = require('../controllers/doctorController')
 const patientController = require('../controllers/patientController')
 const specialtyController = require('../controllers/specialtyController')
+const clinicController = require('../controllers/clinicController')
 const verifyToken = require('../middleware/verifyToken');
 const path = require('path')
 const router = express.Router()
@@ -43,5 +44,7 @@ router.post('/create-new-specialty', specialtyController.createSpecialty)
 router.get('/get-all-specialties', specialtyController.getAllSpecialties)
 router.get('/get-all-detail-specialties', specialtyController.getAllDetailSpecialties)
 router.get('/get-detail-specialty-by-id', specialtyController.getDetailSpecialtyById)
+
+router.post('/create-new-clinic', clinicController.createClinic)
 
 module.exports = router//export default
