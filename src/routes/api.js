@@ -46,5 +46,8 @@ router.get('/get-all-detail-specialties', specialtyController.getAllDetailSpecia
 router.get('/get-detail-specialty-by-id', specialtyController.getDetailSpecialtyById)
 
 router.post('/create-new-clinic', clinicController.createClinic)
+router.get('/get-all-clinics', clinicController.getAllClinics)
+router.get('/get-all-detail-clinics', clinicController.getAllDetailClinics)
+//router.get('/get-detail-clinic-by-id', clinicController.getDetailClinicById)
 
 module.exports = router//export default

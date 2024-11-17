@@ -29,6 +29,42 @@ const createClinic = (data) => {
     })
 }
 
+const getAllClinics = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await db.Clinic.findAll({
+                attributes: {
+                    exclude: ['image', 'introduce', 'strengths',]
+                },
+            });
+            resolve({
+                errCode: 0,
+                errMessage: 'ok',
+                data: data
+            })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const getAllDetailClinics = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await db.Clinic.findAll();
+            resolve({
+                errCode: 0,
+                errMessage: 'ok',
+                data: data
+            })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     createClinic,
+    getAllClinics,
+    getAllDetailClinics
 }
