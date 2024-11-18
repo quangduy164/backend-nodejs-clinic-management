@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Doctor_Infor, { foreignKey: 'doctorId' })//1 user map với 1 doctor_infor
 
       User.hasMany(models.Schedule, { foreignKey: 'doctorid', as: 'doctorData' })//1 user có nhiều schedule
+      User.hasMany(models.Booking, { foreignKey: 'patientId', as: 'patientData' })//1 patient có nhiều booking
     }
   }
   User.init({

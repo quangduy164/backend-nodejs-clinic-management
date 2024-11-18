@@ -37,6 +37,8 @@ router.get('/get-schedule-doctor-by-date', doctorController.getScheduleByDate)
 router.get('/get-extra-infor-doctor-by-id', doctorController.getExtraInforDoctorById)
 router.get('/get-profile-doctor-by-id', doctorController.getProfileDoctorById)
 
+router.get('/get-list-patient-for-doctor', doctorController.getListPatientForDoctor)
+
 router.post('/patient-book-appointment', patientController.postBookAppointment)
 router.post('/verify-book-appointment', patientController.postVerifyAppointment)
 
