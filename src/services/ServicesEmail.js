@@ -1,7 +1,7 @@
 require('dotenv').config()//để dùng được process.env
 const nodemailer = require("nodemailer");
 
-let sendSimpleEmail = async (dataSend) => {
+const sendSimpleEmail = async (dataSend) => {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -32,6 +32,40 @@ let sendSimpleEmail = async (dataSend) => {
     });
 }
 
+const sendAttachmentRemedy = async (dataSend) => {
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // true for port 465, false for other ports
+        auth: {
+            user: process.env.EMAIL_APP,
+            pass: process.env.EMAIL_APP_PASSWORD,
+        },
+        socketTimeout: 5000, // Thay đổi giá trị nếu cần
+    });
+
+    const info = await transporter.sendMail({
+        from: '"Duiii gửi👻" <duyy164@gmail.com>', // sender address
+        to: dataSend.receiverEmail, // list of receivers
+        subject: "Kết quả đặt lịch khám bệnh", // Subject line
+        html: `
+        <h3>Xin chào ${dataSend.patientName}!</h3>
+        <p>Bạn nhận được email này vì đã đặt lịch khám online trên app của duii </p>
+        <p>Thông tin hóa đơn được gửi trong file đính kèm:</p>
+
+        <div>Trân trọng.</div>
+        `, // html body
+        attachments: [
+            {   // encoded string as an attachment
+                filename: `remedy-${new Date().getTime()}.png`,
+                content: dataSend.imageBase64, // Phần dữ liệu Base64
+                encoding: 'base64'
+            },
+        ] //tập tin đính kèm
+    });
+}
+
 module.exports = {
-    sendSimpleEmail
+    sendSimpleEmail,
+    sendAttachmentRemedy
 }

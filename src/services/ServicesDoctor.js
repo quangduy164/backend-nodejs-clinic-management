@@ -1,5 +1,6 @@
 const { where } = require('sequelize')
 const db = require('../models/index')
+const ServicesEmail = require('../services/ServicesEmail')
 const lodash = require('lodash')
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE
@@ -357,6 +358,55 @@ const getListPatientForDoctor = (doctorId, date) => {
     })
 }
 
+const sendRemedy = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.doctorId || !data.email || !data.name
+                || !data.image || !data.token) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameters'
+                })
+            } else {
+                //update patient status = Đã xong
+                let appointment = await db.Booking.findOne({
+                    where: {
+                        doctorId: data.doctorId,
+                        token: data.token,
+                        statusId: 'S2'
+                    },
+                    raw: false
+                })
+                if (appointment) {
+                    appointment.statusId = 'S3'
+                    await appointment.save()
+                    //send email remedy
+                    await ServicesEmail.sendAttachmentRemedy({
+                        receiverEmail: data.email,
+                        patientName: data.name,
+                        imageBase64: data.image.startsWith("data:image/")
+                            ? data.image.split("base64,")[1]
+                            : data.image, // Nếu dữ liệu không chứa "base64," thì dùng nguyên dữ liệu,
+                    })
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'send remedy success',
+                        data: data
+                    })
+                } else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Hóa đơn đã được gửi'
+                    })
+                }
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 module.exports = {
     getTopDoctorHome,
     getAllDoctors,
@@ -366,5 +416,6 @@ module.exports = {
     getScheduleByDate,
     getExtraInforDoctorById,
     getProfileDoctorById,
-    getListPatientForDoctor
+    getListPatientForDoctor,
+    sendRemedy
 }
