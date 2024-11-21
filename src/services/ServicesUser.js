@@ -69,7 +69,7 @@ const getAllUsers = (userId) => {
             if (userId == 'ALL') {
                 user = db.User.findAll({
                     attributes: {
-                        exclude: ['password']
+                        exclude: ['password', 'image']
                     },
                 })
             }
@@ -151,7 +151,10 @@ const updateUserData = (data) => {
                 user.firstName = data.firstName
                 user.lastName = data.lastName
                 user.address = data.address
+                user.gender = data.gender
                 user.roleId = data.roleId
+                user.phoneNumber = data.phoneNumber
+                user.positionId = data.positionId
                 await user.save()
                 resolve({
                     errCode: 0,
